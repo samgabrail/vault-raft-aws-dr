@@ -45,40 +45,15 @@ NOTE: While Terraform's work is done, these instances need time to complete
         their own installation and configuration. Progress is reported within
         the log file `/var/log/tf-user-data.log` and reports 'Complete' when
         the instance is ready.
-
-  vault_1 (3.85.52.104) | internal: (10.0.101.22)
-    - Leader of HA cluster
-
-    $ ssh -l ubuntu 3.85.52.104 -i <path/to/key.pem>
-
-  vault_2 (54.91.74.122) | internal: (10.0.101.23)
-    - Started
-    - You will join it to cluster started by vault_1
-
-    $ ssh -l ubuntu 54.91.74.122 -i <path/to/key.pem>
-
-  vault_3 (54.157.57.173) | internal: (10.0.101.24)
-    - Started
-    - You will join it to cluster started by vault_1
-
-    $ ssh -l ubuntu 54.157.57.173 -i <path/to/key.pem>
-
-  vault_1_DR (18.209.1.21) | internal: (10.0.101.25)
-    - Leader of HA cluster
-
-    $ ssh -l ubuntu 18.209.1.21 -i <path/to/key.pem>
-
-  vault_2_DR (54.91.74.122) | internal: (10.0.101.26)
-    - Started
-    - You will join it to cluster started by vault_1
-
-    $ ssh -l ubuntu 54.91.74.122 -i <path/to/key.pem>
-
-  vault_3_DR (54.157.57.173) | internal: (10.0.101.27)
-    - Started
-    - You will join it to cluster started by vault_1
-
-    $ ssh -l ubuntu 54.157.57.173 -i <path/to/key.pem>    
+ 
+  endpoints = {
+  "vault_1" = "public: 3.81.125.221 | private: 10.0.101.22 | ssh -l ubuntu 3.81.125.221 -i <path/to/key.pem>"
+  "vault_1_DR" = "public: 35.153.207.251 | private: 10.0.101.25 | ssh -l ubuntu 35.153.207.251 -i <path/to/key.pem>"
+  "vault_2" = "public: 34.229.110.140 | private: 10.0.101.23 | ssh -l ubuntu 34.229.110.140 -i <path/to/key.pem>"
+  "vault_2_DR" = "public: 184.72.196.190 | private: 10.0.101.26 | ssh -l ubuntu 184.72.196.190 -i <path/to/key.pem>"
+  "vault_3" = "public: 52.23.244.144 | private: 10.0.101.24 | ssh -l ubuntu 52.23.244.144 -i <path/to/key.pem>"
+  "vault_3_DR" = "public: 18.209.162.29 | private: 10.0.101.27 | ssh -l ubuntu 18.209.162.29 -i <path/to/key.pem>"
+}
 ```
 
 Run the following instructions for both the Primary and DR clusters

@@ -31,6 +31,17 @@ variable "vault_server_private_ips" {
   default = [ "10.0.101.22", "10.0.101.23", "10.0.101.24", "10.0.101.25", "10.0.101.26", "10.0.101.27" ]
 }
 
+variable "instance_names" {
+    type = map(string)
+    default = {
+    "vault_1": "10.0.101.22",
+    "vault_2": "10.0.101.23",
+    "vault_3": "10.0.101.24", 
+    "vault_1_DR": "10.0.101.25",
+    "vault_2_DR": "10.0.101.26",
+    "vault_3_DR": "10.0.101.27",
+  }
+}
 
 # URL for Vault OSS binary
 variable "vault_zip_file" {

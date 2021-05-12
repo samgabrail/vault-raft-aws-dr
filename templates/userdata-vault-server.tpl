@@ -252,9 +252,11 @@ sudo systemctl start vault
 
 ##-------------------------------------------------------------------
 ## Set up aliases to ease networking to each node
-%{ for address, name in tpl_vault_node_address_names  ~}
+echo tpl_vault_node_address_names > /etc/hostnamefiles
+%{ for name, address in tpl_vault_node_address_names  ~}
 echo "${address} ${name}" | sudo tee -a /etc/hosts
 %{ endfor ~}
+
 
 # Automatically intitialize and unseal Vault
 # %{ if tpl_vault_node_name == "vault_1" }
