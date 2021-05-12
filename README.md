@@ -40,8 +40,7 @@ These assets are provided to perform the tasks described in the [Vault HA Cluste
 
     The Terraform output will display the IP addresses of the provisioned Vault nodes.
 
-    ```plaintext
-
+```plaintext
 NOTE: While Terraform's work is done, these instances need time to complete
         their own installation and configuration. Progress is reported within
         the log file `/var/log/tf-user-data.log` and reports 'Complete' when
@@ -80,7 +79,7 @@ NOTE: While Terraform's work is done, these instances need time to complete
     - You will join it to cluster started by vault_1
 
     $ ssh -l ubuntu 54.157.57.173 -i <path/to/key.pem>    
-    ```
+```
 
 Run the following instructions for both the Primary and DR clusters
 
@@ -89,11 +88,21 @@ Run the following instructions for both the Primary and DR clusters
     ```sh
     ssh -l ubuntu 13.56.255.200 -i <path/to/key.pem>
     ```
+    Initialize the Vault node and save the unseal key and root token somewhere safe.
+    ```sh
+    vault operator init \
+    -key-shares=1 \
+    -key-threshold=1
+    ```
+    Unseal the Vault node
+    ```sh
+    vault operator unseal
+    ``` 
 
 2.  Check the current number of servers in the HA Cluster.
 
     ```plaintext
-    $ VAULT_TOKEN=$(cat /tmp/key.json | jq -r ".root_token") vault operator raft list-peers
+    $ VAULT_TOKEN=<root_token> vault operator raft list-peers
     Node       Address             State     Voter
     ----       -------             -----     -----
     vault_1    10.0.101.22:8201    leader    true
@@ -110,7 +119,10 @@ Run the following instructions for both the Primary and DR clusters
     ```plaintext
     $ vault operator raft join http://vault_1:8200
     ```
-
+    Unseal the Vault node
+    ```sh
+    vault operator unseal <use_the_unseal_key_of_vault_1>
+    ``` 
 5.  Open a new terminal and SSH into **vault_3**
 
     ```plaintext
@@ -122,12 +134,16 @@ Run the following instructions for both the Primary and DR clusters
     ```plaintext
     $ vault operator raft join http://vault_1:8200
     ```
+    Unseal the Vault node
+    ```sh
+    vault operator unseal <use_the_unseal_key_of_vault_1>
+    ``` 
 
 7.  Return to the **vault_1** terminal and check the current number of servers in
     the HA Cluster.
 
     ```plaintext
-    $ VAULT_TOKEN=$(cat /tmp/key.json | jq -r ".root_token") vault operator raft list-peers
+    $ VAULT_TOKEN=<root_token> vault operator raft list-peers
 
     Node       Address             State       Voter
     ----       -------             -----       -----
@@ -138,7 +154,7 @@ Run the following instructions for both the Primary and DR clusters
 
     You should see **vault_1**, **vault_2**, and **vault_3** in the cluster.
 
-**NOTE:** Using the root token stored in the `/tmp/key.json` file, you can log into **vault_2** and **vault_3** as well.
+**NOTE:** Using the same root token, you can log into **vault_2** and **vault_3** as well.
 
 Refer to the [Vault HA Cluster with Integrated Storage](https://learn.hashicorp.com/vault/operations/raft-storage-aws) to learn more about [taking a snapshot](https://learn.hashicorp.com/vault/operations/raft-storage-aws#raft-snapshots-for-data-recovery) and [`retry_join` configuration](https://learn.hashicorp.com/vault/operations/raft-storage-aws#retry-join). 
 
