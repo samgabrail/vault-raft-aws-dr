@@ -9,7 +9,7 @@
 
 # Ensure you have received your PoV license file from your HashiCorp sales staff before proceeding. Once the Vault server is started, it will remain active for 6 hours and the license file needs to be added within this time window. If the time window expires without adding the license, it will be necessary to stop and restart the server and re-execute the subsequent commands.
 
-# Run the following instructions for both the Primary and DR clusters
+# Run the following instructions for both the Primary and DR clusters (apply the same license to both)
 
 # 1.  SSH into **vault_1**.
 
@@ -85,7 +85,7 @@
 # 4.  Join **vault_2** to the HA cluster started by **vault_1**.
 
     
-    vault operator raft join http://vault_1:8200
+    vault operator raft join http://vault_1:8200   #!!!!!!FOR DR: vault operator raft join http://vault_1_DR:8200
     
     # Unseal the Vault node
     
@@ -100,7 +100,7 @@
 # 6.  Join **vault_3** to the HA cluster started by **vault_1**.
 
     
-    vault operator raft join http://vault_1:8200
+    vault operator raft join http://vault_1:8200   #!!!!!!FOR DR: vault operator raft join http://vault_1_DR:8200
     
     # Unseal the Vault node
     
