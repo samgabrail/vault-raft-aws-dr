@@ -18,7 +18,9 @@
     
     # Initialize the Vault node and retain the unseal keys and the initial root token, these are incredibly important. For the purpose of the PoV, store this information together. In a real deployment, you would never save these keys together.
     
-    vault operator init
+    vault operator init \
+    -key-shares=1 \
+    -key-threshold=1
     
     # Unseal the Vault. Repeat this step multiple times (3) using a different key each time until the sealed key value changes to false.
     
