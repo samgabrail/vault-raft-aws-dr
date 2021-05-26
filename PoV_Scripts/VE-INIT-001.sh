@@ -66,7 +66,7 @@
 # 2.  Check the current number of servers in the HA Cluster.
 
     
-    VAULT_TOKEN=<root_token> vault operator raft list-peers
+    vault operator raft list-peers
 
     # Output
     # Node       Address             State     Voter
@@ -108,7 +108,7 @@
 # 7.  Return to the **vault_1** terminal and check the current number of servers in the HA Cluster.
 
     
-    VAULT_TOKEN=<root_token> vault operator raft list-peers
+    vault operator raft list-peers
 
     # Output:
 
