@@ -1,3 +1,13 @@
+terraform {
+  required_version = ">= 0.15"
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "3.42.0"
+    }
+  }
+}
+
 provider "aws" {
   region = var.aws_region
 }
@@ -79,7 +89,9 @@ resource "aws_instance" "vault-server" {
   tags = {
     Name = "${var.environment_name}-vault-server-${each.key}"
     instance_name = each.key
-    cluster_name = "raft-test"
+    cluster_name = "raft-pov"
+    owner = "sam.gabrail@hashicorp.com"
+    TTL = 984
   }
 
   lifecycle {

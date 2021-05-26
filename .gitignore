@@ -24,3 +24,5 @@
 
 # Generated private key
 *.key
+secrets.txt
+PoV_Scripts/vault.hclic
