@@ -94,18 +94,18 @@ vault login -method=userpass username=user1
 
 # Create a secret using the token associated with the user1 policy:
 
-VAULT_TOKEN="user-1-aaaa-bbbb" vault kv put secret/user1 "password=secret"
+VAULT_TOKEN="user-1-aaaa-bbbb" vault kv put kv/user1 "password=secret"
 # Success! Data written to: secret/user1
 
 # Alternatively via the API:
 curl -vv \
-  "${VAULT_ADDR}/v1/secret/user1" -H 'Content-Type: application/json' \
+  "${VAULT_ADDR}/v1/kv/user1" -H 'Content-Type: application/json' \
   -H "X-Vault-Token: ${VAULT_TOKEN}" --data-binary '{"password":"secret"}'
 
 
 # Retrieve the secret using the token associated with the user1 policy:
 
-VAULT_TOKEN="user1-aaaa-bbbb" vault read secret/user1
+VAULT_TOKEN="user1-aaaa-bbbb" vault read kv/user1
 # ==========Data==========
 # Key     	      Value
 # ---     	      -----
@@ -114,7 +114,7 @@ VAULT_TOKEN="user1-aaaa-bbbb" vault read secret/user1
 
 # Alternatively via the API:
 curl -vv \
-  "${VAULT_ADDR}/v1/secret/user1" -H "X-Vault-Token: ${VAULT_TOKEN}"
+  "${VAULT_ADDR}/v1/kv/user1" -H "X-Vault-Token: ${VAULT_TOKEN}"
 
 
 # Update the secret using the token associated with the user1 policy:

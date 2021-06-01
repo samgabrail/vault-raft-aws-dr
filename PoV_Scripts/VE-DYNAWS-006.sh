@@ -10,7 +10,7 @@ vault secrets enable aws
 vault write aws/config/root \
     access_key=AKIAJWVN5Z4FOFT7NLNA \
     secret_key=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 \
-    region=eu-west-1
+    region=us-east-1
 
 # Configure a role that maps a name in Vault to a policy or policy file in AWS. When users generate credentials, they are generated against this role:
 
