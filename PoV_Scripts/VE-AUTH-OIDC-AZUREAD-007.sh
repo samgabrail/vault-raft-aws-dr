@@ -1,7 +1,7 @@
 # Description
 # Use Vault Enterprise OIDC authentication method with Azure AD to authenticate a user to Vault and retrieve a secret. Relevant Vault documentation can be found at the following website: https://www.vaultproject.io/docs/auth/jwt.html
 # Setup
-# For Azure configuration, follow the instructions in this doc: https://www.vaultproject.io/docs/auth/jwt/oidc_providers#azure-active-directory-aad
+# For Azure specific configuration, follow the instructions in this doc: https://www.vaultproject.io/docs/auth/jwt/oidc_providers#azure-active-directory-aad
 
 # In Vault do the following:
 # Enable the OIDC auth method
@@ -60,9 +60,3 @@ vault write identity/group-alias \
    name="your_ad_group_object_id" \
    mount_accessor="vault_oidc_accessor_id" \
    canonical_id="vault_external_group_id"
-
-Example:
-vault write identity/group-alias \
-   name="0edcd2c1-df2c-499e-9535-c3de2f25d397" \
-   mount_accessor="auth_oidc_e618d3f2" \
-   canonical_id="7a6d1bc3-a897-f3e0-26b4-c0d1b2f19eea"
