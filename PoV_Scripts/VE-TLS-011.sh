@@ -1,5 +1,26 @@
 # Description
 # Enable TLS in Vault
+
+# Important note: if you need to include a CA's cert then concatenate it with the primary cert. The primary cert has to come in first as per https://www.vaultproject.io/docs/configuration/listener/tcp#tls_cert_file
+# It will look like this below (some lines are ommitted)
+
+# -----BEGIN CERTIFICATE-----
+# MIIEpDCCA4ygAwIBAgIUQH7/TloKpVrsd4qmzAyqobVPRdUwDQYJKoZIhvcNAQEL
+# BQAwgYsxCzAJBgNVBAYTAlVTMRkwFwYDVQQKExBDbG91ZEZsYXJlLCBJbmMuMTQw
+# FeNMyGTziOqe7EE9sdPYK7f07KKI5jo3S2UJW8mWEK48XW69LO61mUDWxJ5gJrQp
+# jbvjHYOWCvIjmjKgOym28rFo9i9j/2VKcA5H8JI55MYew/IxqS7Uip8Svs/2kazX
+# iStpaQguD/JmRoD92V9/8dVMaTbXgJwqHqi4MkuZbMGf4WybIjOxezG3jAfd6glq
+# JfXVBx+xWl8SbeKASQxv+FfG90hNNIQtX+YVWQFd/z1idgrYhLXOoQ==
+# -----END CERTIFICATE-----
+# -----BEGIN CERTIFICATE-----
+# MIIEADCCAuigAwIBAgIID+rOSdTGfGcwDQYJKoZIhvcNAQELBQAwgYsxCzAJBgNV
+# BAYTAlVTMRkwFwYDVQQKExBDbG91ZEZsYXJlLCBJbmMuMTQwMgYDVQQLEytDbG91
+# ZEZsYXJlIE9yaWdpbiBTU0wgQ2VydGlmaWNhdGUgQXV0aG9yaXR5MRYwFAYDVQQH
+# hhurjcoacvRNhnjtDRM0dPeiCJ50CP3wEYuvUzDHUaowOsnLCjQIkWbR7Ni6KEIk
+# MOz2U0OBSif3FTkhCgZWQKOOLo1P42jHC3ssUZAtVNXrCk3fw9/E15k8NPkBazZ6
+# 0iykLhH1trywrKRMVw67F44IE8Y=
+# -----END CERTIFICATE-----
+
 # You'll need to repeat the steps below on all members of the primary cluster including the DR cluster
 # SCP the cert and private key over to the VMs
 scp -r certs/ ubuntu@52.205.8.7:/tmp
@@ -34,4 +55,3 @@ systemctl status vault
 export VAULT_ADDR=https://localhost:8200
 vault status
 vault operator unseal
-
