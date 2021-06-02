@@ -1,20 +1,25 @@
 # Description
 # Use Vault Enterprise OIDC authentication method with Azure AD to authenticate a user to Vault and retrieve a secret. Relevant Vault documentation can be found at the following website: https://www.vaultproject.io/docs/auth/jwt.html
 # Setup
-# Within Azure administration: 
-# Register or select an AAD application. Visit Overview page.
-# Configure Redirect URIs ("Web" type).
-# Record "Application (client) ID".
-# Under "Endpoints", copy the OpenID Connect metadata document URL, omitting the /well-known... portion.
-# Switch to Certificates & Secrets. Create a new client secret and record the generated value as it will not be accessible after you leave the page.
+# For Azure configuration, follow the instructions in this doc: https://www.vaultproject.io/docs/auth/jwt/oidc_providers#azure-active-directory-aad
+
+# In Vault do the following:
 # Enable the OIDC auth method
 vault auth enable oidc
 
+# Create an oidc policy to test getting a secret
+vault policy write oidc policies/oidc.hcl
+
 # Configure the OIDC method
-vault write auth/oidc/config oidc_discovery_url="https://login.microsoftonline.com/{tenant}/v2.0/" oidc_client_id="CLIENT-ID" oidc_client_secret="CLIENT-SECRET" default_role="demo"
+vault write auth/oidc/config oidc_discovery_url="https://login.microsoftonline.com/{tenant}/v2.0" oidc_client_id="CLIENT-ID" oidc_client_secret="CLIENT-SECRET" default_role="demo"
 
 # Create a role in the method
-vault write auth/oidc/role/demo bound_audiences="CLIENT-ID" allowed_redirect_uris="https://VAULT_ADDR:8200/ui/vault/auth/oidc/oidc/callback" allowed_redirect_uris="http://localhost:8250/oidc/callback" user_claim="sub" policies="oidcdemo"
+vault write auth/oidc/role/demo \
+   user_claim="email" \
+   allowed_redirect_uris="http://localhost:8250/oidc/callback,https://online_version_hostname:port_number/ui/vault/auth/oidc/oidc/callback"  \
+   groups_claim="groups" \
+   oidc_scopes="https://graph.microsoft.com/.default" \
+   policies=default
 
 # Ensure that the VAULT_TOKEN variable is unset. Login using
 vault login -method=oidc
@@ -37,5 +42,27 @@ vault login -method=oidc
 # policies             ["default" "oidcdemo"]
 # token_meta_role      demo
 
+# Test putting and getting a secret
+vault kv put kv/test foo=bar
+vault kv get kv/test
 
+# Connect AD group with Vault external group
 
+# In Vault, create the external group. Record the group ID as you will need it for the group alias.
+
+# From Vault, retrieve the OIDC accessor ID from the OIDC auth method as you will need it for the group alias's mount_accessor.
+
+# Go to the Azure AD Group you want to attach to Vault's external group. Record the objectId as you will need it as the group alias name in Vault.
+
+# In Vault, create a group alias for the external group and set the objectId as the group alias name.
+
+vault write identity/group-alias \
+   name="your_ad_group_object_id" \
+   mount_accessor="vault_oidc_accessor_id" \
+   canonical_id="vault_external_group_id"
+
+Example:
+vault write identity/group-alias \
+   name="0edcd2c1-df2c-499e-9535-c3de2f25d397" \
+   mount_accessor="auth_oidc_e618d3f2" \
+   canonical_id="7a6d1bc3-a897-f3e0-26b4-c0d1b2f19eea"
