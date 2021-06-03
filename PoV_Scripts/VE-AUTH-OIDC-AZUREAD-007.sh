@@ -19,7 +19,14 @@ vault write auth/oidc/role/demo \
    allowed_redirect_uris="http://localhost:8250/oidc/callback,https://online_version_hostname:port_number/ui/vault/auth/oidc/oidc/callback"  \
    groups_claim="groups" \
    oidc_scopes="https://graph.microsoft.com/.default" \
-   policies=default
+   policies=default,oidc
+
+vault write auth/oidc/role/demo \
+   user_claim="email" \
+   allowed_redirect_uris="http://localhost:8250/oidc/callback,https://vault-test.tekanaid.com:443/ui/vault/auth/oidc/oidc/callback"  \
+   groups_claim="groups" \
+   oidc_scopes="https://graph.microsoft.com/.default" \
+   policies=default,oidc
 
 # Ensure that the VAULT_TOKEN variable is unset. Login using
 vault login -method=oidc

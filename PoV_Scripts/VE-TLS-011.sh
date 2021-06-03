@@ -43,6 +43,7 @@ sudo vim /etc/vault.d/vault.hcl
 #   tls_key_file  = "/etc/vault.d/certs/private_key.pem"
 # }
 
+# You can leverage ansible for the steps below this is found in the ansible folder
 # SSH into each of the VMs and move the certs folder to /etc/vault.d and fix ownership
 sudo mv /tmp/certs /etc/vault.d/
 sudo chown -R vault:vault /etc/vault.d/certs

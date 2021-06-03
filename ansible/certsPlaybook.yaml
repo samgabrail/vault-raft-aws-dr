@@ -1,0 +1,20 @@
+# ansible-playbook -i inventory certsPlaybook.yaml
+---
+- hosts: all
+  become_user: root
+  become: true
+  tasks:
+    - name: certs folder to /etc/vault.d
+      copy: src=../certs dest=/etc/vault.d
+    - file: 
+        dest=/etc/vault.d/certs owner=vault group=vault recurse=yes
+    - name: ReStart vault service
+      systemd:
+        state: restarted
+        name: vault
+        daemon_reload: yes
+    - pause:
+        seconds: 5
+    - name: unseal vault
+      script: unseal.sh
+    

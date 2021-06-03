@@ -26,3 +26,4 @@
 *.key
 secrets.txt
 PoV_Scripts/vault.hclic
+ansible/unseal.sh

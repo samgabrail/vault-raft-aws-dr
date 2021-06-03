@@ -1,0 +1,14 @@
+[all:children]
+vault_nodes
+
+[all:vars]
+ansible_user=ubuntu
+ansible_python_interpreter=/usr/bin/python3
+
+[vault_nodes]
+vault_1 ansible_host=52.91.81.176
+vault_1_DR ansible_host=54.144.44.126
+vault_2 ansible_host=174.129.94.136
+vault_2_DR ansible_host=18.234.155.120
+vault_3 ansible_host=54.81.201.28
+vault_3_DR ansible_host=52.205.8.7
