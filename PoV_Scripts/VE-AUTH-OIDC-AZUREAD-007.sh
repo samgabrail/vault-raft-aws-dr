@@ -23,7 +23,7 @@ vault write auth/oidc/role/demo \
 
 vault write auth/oidc/role/demo \
    user_claim="email" \
-   allowed_redirect_uris="http://localhost:8250/oidc/callback,https://vault-test.tekanaid.com:443/ui/vault/auth/oidc/oidc/callback"  \
+   allowed_redirect_uris="http://localhost:8250/oidc/callback,https://vault-test.tekanaid.com/ui/vault/auth/oidc/oidc/callback"  \
    groups_claim="groups" \
    oidc_scopes="https://graph.microsoft.com/.default" \
    policies=default,oidc
