@@ -2,5 +2,5 @@ path "sys/*" {
   capabilities = ["deny"]
 }
 path "kv/*" {
-  capabilities = ["create","read","update","delete"]
+  capabilities = ["list","create","read","update","delete"]
 }

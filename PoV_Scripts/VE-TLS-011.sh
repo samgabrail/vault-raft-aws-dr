@@ -3,6 +3,8 @@
 
 # Important note: if you need to include a CA's cert then concatenate it with the primary cert. The primary cert has to come in first as per https://www.vaultproject.io/docs/configuration/listener/tcp#tls_cert_file
 # It will look like this below (some lines are ommitted)
+# Good docs on using ELB for loadbalancing with Vault
+# https://registry.terraform.io/modules/hashicorp/vault/aws/latest/submodules/vault-elb#how-is-the-elb-configured
 
 # -----BEGIN CERTIFICATE-----
 # MIIEpDCCA4ygAwIBAgIUQH7/TloKpVrsd4qmzAyqobVPRdUwDQYJKoZIhvcNAQEL
