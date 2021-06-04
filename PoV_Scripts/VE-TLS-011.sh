@@ -56,3 +56,9 @@ systemctl status vault
 export VAULT_ADDR=https://localhost:8200
 vault status
 vault operator unseal
+
+# Important note
+# When accessing Vault from the CLI, make sure to assign the VAULT_CACERT env variable to the ca cert as below
+export VAULT_CACERT="certs/ca.pem"
+# Otherwise you may get this error:
+# x509: certificate signed by unknown authority

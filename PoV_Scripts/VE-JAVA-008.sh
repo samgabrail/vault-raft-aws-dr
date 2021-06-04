@@ -34,6 +34,9 @@ export SPRING_TOKEN=$(vault token create -format=json -policy="spring" | jq -r "
 echo $SPRING_TOKEN
 # s.PiZl5PouwiXdfCihcFYPradt
 
+# The Spring container can use an external VAULT (define an env variable) or a Vault running on localhost. You could run a reverse SSH tunnel to expose a remote Vault locally with the following command:
+# ssh -L 8200:localhost:8200 <vault_public_ip>
+
 # Stand up the Spring container:
 docker run -d -p 8090:8090 -t \
     --env VAULT_TOKEN=${SPRING_TOKEN} --name pov-vault-spring \

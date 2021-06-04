@@ -28,6 +28,9 @@ vault write auth/oidc/role/demo \
    oidc_scopes="https://graph.microsoft.com/.default" \
    policies=default,oidc
 
+# Important note
+# When accessing Vault from the CLI and when using TLS with Vault, make sure to assign the VAULT_CACERT env variable to the ca cert as below
+export VAULT_CACERT="certs/ca.pem"
 # Ensure that the VAULT_TOKEN variable is unset. Login using
 vault login -method=oidc
 
