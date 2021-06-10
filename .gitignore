@@ -27,3 +27,4 @@
 secrets.txt
 PoV_Scripts/vault.hclic
 ansible/unseal.sh
+PoV_Scripts/Terraform-AWS-SecretsMgr-to-Vault/start.sh
