@@ -8,7 +8,7 @@
       copy: src=../certs dest=/etc/vault.d
     - file: 
         dest=/etc/vault.d/certs owner=vault group=vault recurse=yes
-    - name: ReStart vault service
+    - name: Restart vault service
       systemd:
         state: restarted
         name: vault

@@ -36,9 +36,10 @@ echo $SPRING_TOKEN
 
 # The Spring container can use an external VAULT (define an env variable) or a Vault running on localhost. You could run a reverse SSH tunnel to expose a remote Vault locally with the following command:
 # ssh -L 8200:localhost:8200 <vault_public_ip>
-
+# ssh -L 8200:localhost:8200 vault-test.tekanaid.com
+# The problem with this container is that it doesn't support TLS for Vault so you can only run it against http for Vault. It also hard codes the port to 8200 for Vault.
 # Stand up the Spring container:
-docker run -d -p 8090:8090 -t \
+docker run --rm -d -p 8090:8090 -t \
     --env VAULT_TOKEN=${SPRING_TOKEN} --name pov-vault-spring \
     --env VAULT_HOST="host.docker.internal" \
     hashidstover/pov-vault-spring:latest
